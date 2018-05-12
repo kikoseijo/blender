@@ -83,7 +83,7 @@ composer install --prefer-dist --no-scripts --no-dev -q -o;
 {{ logMessage("📦  Running Yarn...") }}
 cd {{ $newReleaseDir }};
 yarn config set ignore-engines true
-yarn
+yarn --frozen-lockfile
 @endtask
 
 @task('generateAssets', ['on' => 'remote'])
@@ -136,8 +136,9 @@ php artisan horizon:terminate
 php artisan config:clear
 php artisan cache:clear
 php artisan config:cache
+php artisan view:cache
 
-sudo service php7.1-fpm restart
+sudo service php7.2-fpm restart
 sudo supervisorctl restart all
 @endtask
 
@@ -166,11 +167,8 @@ git pull origin master
 php artisan config:clear
 php artisan cache:clear
 php artisan config:cache
-sudo service php7.1-fpm restart
+php artisan view:cache
+sudo service php7.2-fpm restart
 php artisan horizon:terminate
 sudo supervisorctl restart all
 @endtask
-
-@finished
-    @slack(env('SLACK_DEPLOYMENT_WEBHOOK_URL'), '#deployments', "{$server}: {$baseDir} release {$newReleaseName} by {$user}")
-@endfinished

@@ -10,10 +10,12 @@ class ViewServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->addComposer('*', \App\Http\ViewComposers\Shared\GlobalViewComposer::class);
-        $this->addComposer('*._layouts.*', \App\Http\ViewComposers\Shared\EncryptedCsrfTokenComposer::class);
+        Blade::withDoubleEncoding();
 
-        $this->addComposer('front._layouts.*', \App\Http\ViewComposers\Front\SeoViewComposer::class);
+        $this->addComposer('*', \App\Http\ViewComposers\Shared\GlobalViewComposer::class);
+        $this->addComposer('*.layouts.*', \App\Http\ViewComposers\Shared\EncryptedCsrfTokenComposer::class);
+
+        $this->addComposer('front.layouts.*', \App\Http\ViewComposers\Front\SeoViewComposer::class);
 
         Blade::directive('svg', function ($expression) {
             return "<?php echo svg({$expression}); ?>";

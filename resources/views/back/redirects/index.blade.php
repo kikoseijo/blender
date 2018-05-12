@@ -1,4 +1,4 @@
-@component('back._layouts.master', [
+@component('back.layouts.app', [
     'title' => 'Redirects',
 ])
     <section>

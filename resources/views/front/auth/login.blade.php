@@ -1,11 +1,11 @@
-@component('front._layouts.main', [
+@component('front.layouts.main', [
     'title' => __('auth.login')
 ])
     {{ html()->form()->open() }}
 
-    <div class="form__group">
-        {{ html()->label(__('auth.email'), 'email')->class('label--required') }}
-        {{ html()->email('email')->attribute('autofocus') }}
+    <div class="form-group">
+        {{ html()->label(__('auth.email'), 'email')->class('label is-required') }}
+        {{ html()->email('email')->required()->attribute('autofocus') }}
         {{ html()->error($errors->first('email')) }}
     </div>
 
